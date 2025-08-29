@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="">
+  <title>Simple Webpage</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f4f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      display: block;
+    }
+
+    .navbar a:hover {
+      background-color: #575757;
+    }
+
+    /* Dropdown */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #444;
+      min-width: 160px;
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #666;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Cards */
+    .cards {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+   <div class="offcanvas-body">
+                    <ul class="navbar-nav text-center align-items-center justify-content-end flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link active pe-lg-5" aria-current="page" href="Example/Pages/FSD.html">Full Stack Development</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pe-lg-5" href="about.html">HTML</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pe-lg-5" href="portfolio.html">CSS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pe-lg-5" href="reviews.html">Bootstrap</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link pe-lg-5" href="contact.html">JavaScript</a>
+                        
+                        <li class="nav-item dropdown">
+                            <a class="nav-link pe-lg-5 dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                aria-expanded="false"> Pages</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="service-details.html" class="dropdown-item">Full Stack
+                                        <span class="badge bg-dark">PDF</span></a></li>
+                                <li><a href="portfolio-masonary.html" class="dropdown-item">HTML <span
+                                            class="badge bg-dark">PDF</span></a></li>
+                                <li><a href="portfolio-details.html" class="dropdown-item">CSS
+                                        <span class="badge bg-dark">PDF</span></a></li>
+                                <li><a href="faqs.html" class="dropdown-item">Bootstrap <span
+                                            class="badge bg-dark">PDF</span></a></li>
+                                <li><a href="team.html" class="dropdown-item">JavaScript <span
+                                            class="badge bg-dark">PDF</span></a></li>
+                            </ul>
+                        </li>
+                        </li>
+                    </ul>
+   </div>
+
+  <!-- Cards Section -->
+  <div class="cards">
+    <div class="card">
+      <h3>Card 1</h3>
+      <p>This is the first card.</p>
+    </div>
+    <div class="card">
+      <h3>Card 2</h3>
+      <p>This is the second card.</p>
+    </div>
+    <div class="card">
+      <h3>Card 3</h3>
+      <p>This is the third card.</p>
+    </div>
+    <div class="card">
+      <h3>Card 4</h3>
+      <p>This is the fourth card.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 My Simple Webpage. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

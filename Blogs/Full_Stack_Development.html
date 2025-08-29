@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap Navbar, Cards & Footer</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .navbar-brand img {
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      background-color: #212529;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+
+    footer a {
+      margin: 0 10px;
+      color: #f8f9fa;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      color: #0d6efd;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <img src="../DP.jpg" alt="Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto text-center">
+          <li class="nav-item">
+            <a class="nav-link active" href="../Blogs/Full_Stack_Development.html">Full Stack Development</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="../Blogs/HTML.html">HTML</a></li>
+          <li class="nav-item"><a class="nav-link" href="../Blogs/CSS.html">CSS</a></li>
+          <li class="nav-item"><a class="nav-link" href="../Blogs/Bootstrap.html">Bootstrap</a></li>
+          <li class="nav-item"><a class="nav-link" href="../Blogs/JavaScript.html">JavaScript</a></li>
+
+          <!-- Dropdown Menu -->
+            <li class="nav-item dropdown" style="margin-left: 10px;">
+            <a class="btn btn-primary dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                     PDF Files
+            </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                 <li><a class="dropdown-item" href="../Full Stack Development.pdf" target="_blank" rel="noopener noreferrer">Full Stack Dev.pdf</a></li>
+                     <li><a class="dropdown-item" href="../HTML.pdf" target="_blank" rel="noopener noreferrer">HTML.pdf</a></li>
+                    <li><a class="dropdown-item" href="../CSS.pdf" target="_blank" rel="noopener noreferrer">CSS.pdf</a></li>
+                    <li><a class="dropdown-item" href="../Bootstrap.pdf" target="_blank" rel="noopener noreferrer">Bootstrap.pdf</a></li>
+                    <li><a class="dropdown-item" href="../JavaScript.pdf" target="_blank" rel="noopener noreferrer">JavaScript.pdf</a></li>
+  </ul>
+</li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Body with Cards -->
+  <div class="container my-5">
+
+    <!-- Row 1 -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Full Stack Development</h5>
+            <p class="card-text">
+                Full stack development refers to the process of building the front-end (client - side) and 
+                back-end (server side) of the web application. A full stack developer who has knowledge 
+                and skill across the entire stack of technologies used to build a complete application 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Types:</h5>
+            <p class="card-text"><pre>
+                Frontend:
+                The front-end is the interface of the application, the part that users actually see and 
+                design, user interface, and user experience. The core technologies are HTML 
+                (Structure), CSS (Style), and JavaScript (Behaviour). Popular frameworks and 
+                libraries are React, Angular, and Vue.js.  
+                
+                Backend:
+                The back-end, this is what runs the application by handling business logic, 
+                authentication, etc. When users make requests, the back-end runs business logic, 
+                gets data from the database all while doing it on the back-end without users ever 
+                knowing it is happening. Popular languages are Node.js, Python, Java, PHP, and 
+                Ruby on Rails. API designs such as REST or GraphQL are used in communication but 
+                connect the server to the client side on an application.
+
+                Database: 
+                The databases are what holds the application data organized, securely, and 
+                managed. It allows an application to retrieve, update, and store data efficiently and 
+                effectively. Databases can be a relational database (SQL) such as MySQL, 
+                PostgreSQL, or Oracle, or they can be non-relational or NoSQL databases such as 
+                MongoDB, Firebase, or Cassandra. </pre>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title"></h5>
+            <p class="card-text">
+                   
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer with Social Links -->
+  <footer>
+    <div class="container">
+      <p>Connect with me:</p>
+      <a href="https://github.com/" target="_blank">🐱 GitHub</a>
+      <a href="#">📸 Instagram</a>
+      <a href="#">🐦 Twitter</a>
+      <a href="#">💼 LinkedIn</a>
+      <a href="#">📧 Email</a>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

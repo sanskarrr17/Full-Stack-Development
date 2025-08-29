@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>JS Calculator</title>
+<style>
+  :root { --bg:#0f172a; --panel:#111827; --btn:#1f2937; --txt:#e5e7eb; --muted:#9ca3af; --accent:#60a5fa; }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; background:var(--bg); color:var(--txt); font-family:system-ui,Segoe UI,Roboto,Arial; }
+  .calc { width:min(360px, 92vw); background:var(--panel); border:1px solid #263041; border-radius:18px; padding:16px; box-shadow:0 12px 40px rgba(0,0,0,.35); }
+  .screen { height:96px; background:#0b1224; border:1px solid #263041; border-radius:12px; padding:10px 12px; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+  .mini { color:var(--muted); font-size:12px; height:18px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .main { font-size:34px; text-align:right; line-height:1.2; word-break:break-all; }
+  .keys { margin-top:12px; display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; }
+  button { background:var(--btn); color:var(--txt); border:0; border-radius:12px; padding:16px; font-size:18px; cursor:pointer; transition:transform .03s ease, opacity .2s; }
+  button:active { transform:scale(.98); }
+  .op { background:#1b2a42; }
+  .eq { background:var(--accent); color:#0b1224; font-weight:800; }
+  .wide { grid-column:span 2; }
+</style>
+</head>
+<body>
+  <div class="calc" role="application" aria-label="Calculator">
+    <div class="screen" aria-live="polite">
+      <div id="history" class="mini"></div>
+      <div id="display" class="main">0</div>
+    </div>
+
+    <div class="keys">
+      <button data-act="ac" title="All Clear">AC</button>
+      <button data-act="del" title="Delete">DEL</button>
+      <button data-act="sign" title="Plus/Minus">±</button>
+      <button data-op="÷" class="op">÷</button>
+
+      <button data-num="7">7</button>
+      <button data-num="8">8</button>
+      <button data-num="9">9</button>
+      <button data-op="×" class="op">×</button>
+
+      <button data-num="4">4</button>
+      <button data-num="5">5</button>
+      <button data-num="6">6</button>
+      <button data-op="−" class="op">−</button>
+
+      <button data-num="1">1</button>
+      <button data-num="2">2</button>
+      <button data-num="3">3</button>
+      <button data-op="+" class="op">+</button>
+
+      <button data-act="percent">%</button>
+      <button data-num="0">0</button>
+      <button data-dot="." title="Decimal">.</button>
+      <button data-act="eq" class="eq">=</button>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const display = document.getElementById('display');
+  const history = document.getElementById('history');
+
+  let a = null;        // first operand
+  let b = null;        // second operand (being typed)
+  let op = null;       // current operator: + − × ÷
+  let justEvaluated = false;
+
+  const fmt = n => {
+    if (!isFinite(n)) return 'Error';
+    const s = (+n).toString();
+    // limit length; keep precision
+    let out = (+n).toFixed(12);
+    out = (+out).toString();         // strip trailing zeros
+    return out.length > 14 ? (+n).toPrecision(10) : out;
+  };
+
+  const update = () => {
+    const top = [a !== null ? fmt(a) : '', op || '', (b !== null && b !== '') ? b : ''].join(' ').trim();
+    history.textContent = top;
+    display.textContent = (b !== null && b !== '') ? b : (a !== null ? fmt(a) : '0');
+  };
+
+  const inputNum = d => {
+    if (justEvaluated && !op) { a = null; }
+    justEvaluated = false;
+    if (op === null) {                     // typing first operand
+      a = (a === null || a === 0 && d !== '.') ? '' + (d === '.' ? '0.' : d) : '' + (a + '' + d);
+      if (d === '.' && (a + '').indexOf('.') !== (a + '').lastIndexOf('.')) a = (a + '').replace(/\.+$/, '.');
+      b = null;
+    } else {                               // typing second operand
+      b = (b === null || b === 0 && d !== '.') ? '' + (d === '.' ? '0.' : d) : '' + (b + '' + d);
+      if (d === '.' && (b + '').indexOf('.') !== (b + '').lastIndexOf('.')) b = (b + '').replace(/\.+$/, '.');
+    }
+    update();
+  };
+
+  const setOp = o => {
+    if (a === null) a = 0;
+    if (b !== null) { equal(); }   // chain operations
+    op = o;
+    justEvaluated = false;
+    update();
+  };
+
+  const clearAll = () => { a = null; b = null; op = null; justEvaluated = false; update(); };
+  const del = () => {
+    if (b !== null && b !== '') { b = b.slice(0, -1) || null; }
+    else if (op) { op = null; }
+    else if (a !== null) { a = (a + '').slice(0, -1); if (a === '' || a === '-' || a === null) a = null; }
+    update();
+  };
+  const sign = () => {
+    if (b !== null && b !== '') b = (b.startsWith('-') ? b.slice(1) : '-' + b);
+    else if (a !== null) a = -a;
+    update();
+  };
+  const percent = () => {
+    if (b !== null && b !== '') b = fmt(parseFloat(b) / 100);
+    else if (a !== null) a = parseFloat(fmt(a / 100));
+    update();
+  };
+
+  const operate = (x, o, y) => {
+    x = +x; y = +y;
+    switch (o) {
+      case '+': return x + y;
+      case '−': return x - y;
+      case '×': return x * y;
+      case '÷': return y === 0 ? NaN : x / y;
+      default:  return y;
+    }
+  };
+
+  const equal = () => {
+    if (op === null || b === null) return;
+    const res = operate(a, op, b);
+    a = isFinite(res) ? res : NaN;
+    b = null; op = null; justEvaluated = true;
+    update();
+  };
+
+  // Button events
+  document.querySelectorAll('[data-num]').forEach(btn =>
+    btn.addEventListener('click', () => inputNum(btn.dataset.num))
+  );
+  document.querySelector('[data-dot]')?.addEventListener('click', () => inputNum('.'));
+  document.querySelectorAll('[data-op]').forEach(btn =>
+    btn.addEventListener('click', () => setOp(btn.dataset.op))
+  );
+  document.querySelector('[data-act="ac"]').addEventListener('click', clearAll);
+  document.querySelector('[data-act="del"]').addEventListener('click', del);
+  document.querySelector('[data-act="sign"]').addEventListener('click', sign);
+  document.querySelector('[data-act="percent"]').addEventListener('click', percent);
+  document.querySelector('[data-act="eq"]').addEventListener('click', equal);
+
+  // Keyboard support
+  window.addEventListener('keydown', (e) => {
+    const k = e.key;
+    if (/\d/.test(k)) inputNum(k);
+    else if (k === '.') inputNum('.');
+    else if (k === '+' || k === '-') setOp(k === '+' ? '+' : '−');
+    else if (k === '*' || k.toLowerCase() === 'x') setOp('×');
+    else if (k === '/') setOp('÷');
+    else if (k === 'Enter' || k === '=') { e.preventDefault(); equal(); }
+    else if (k === 'Backspace') del();
+    else if (k.toLowerCase() === 'c' || k === 'Escape') clearAll();
+    else if (k === '%') percent();
+  });
+
+  // init
+  update();
+})();
+</script>
+</body>
+</html>
